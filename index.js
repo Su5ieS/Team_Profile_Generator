@@ -5,8 +5,8 @@ const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const teamMembers = [];
 
-inquirer
-  .prompt([
+
+  inquirer.prompt([
     {
       type: "list",
       message:
