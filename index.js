@@ -38,7 +38,10 @@ inquirer
       name: "id",
       validate: (idInput) => {
         if (isNaN(idInput)) {
-          console.log("Please enter team member ID (must be NUMERICAL value)");
+          console.log("  Please reenter team member ID (must be NUMERICAL value)");
+          return false;
+        } else if (idInput == '') {
+          console.log("  Please reenter team member ID (must be NUMERICAL value)");
           return false;
         } else {
           return true;
@@ -54,7 +57,7 @@ inquirer
         if (valid) {
           return true;
         } else {
-          console.log("Please enter a vaild email.");
+          console.log("  Please reenter and provide a vaild email.");
           return false;
         }
       },
@@ -90,7 +93,7 @@ inquirer
       </body>
     </html> `;
 
-    fs.writeFile("index.html", generateHTML, (error) => {
+    fs.writeFile("./dist/index.html", generateHTML, (error) => {
       console.log(error);
     });
   })
