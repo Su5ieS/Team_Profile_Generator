@@ -1,5 +1,9 @@
 const fs = require("fs");
 const inquirer = require("inquirer");
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
+const teamMembers = [];
 
 inquirer
   .prompt([
@@ -30,33 +34,34 @@ inquirer
     },
     {
       type: "input",
-      message: "What is the team member's id?",
+      message: "What is the team member id? (must be numerical value)",
       name: "id",
-      validate: (idAnswer) => {
-        if (idAnswer) {
-          return true;
-        } else {
-          console.log("Please enter team members id to continue.");
+      validate: (idInput) => {
+        if (isNaN(idInput)) {
+          console.log("Please enter team member ID (must be NUMERICAL value)");
           return false;
+        } else {
+          return true;
         }
       },
     },
     {
       type: "input",
-      message: "What is the team member's email?",
+      message: "What is the team members email?",
       name: "email",
-      validate: (emailAnswer) => {
-        if (emailAnswer) {
+      validate: (email) => {
+        valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+        if (valid) {
           return true;
         } else {
-          console.log("Please enter team members email to continue.");
+          console.log("Please enter a vaild email.");
           return false;
         }
       },
     },
     {
       type: "input",
-      message: "What is the team member's id?",
+      message: "What is the team member id?",
       name: "id",
       validate: (idAnswer) => {
         if (idAnswer) {
@@ -71,14 +76,32 @@ inquirer
   /* Questions pass in here to generate HTML*/
   .then((answers) => {
     console.log(answers);
-    const generateHTML = `<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<div class="jumbotron jumbotron-fluid">
-    <div class="container">
-    <h1 class="display-6" style="text-align: center;">My Team</h1>
-    </div>
-</div>
+    const generateHTML = `<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+          rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous"
+        />
+        <title>Team Profile Generator</title>
+      </head>
+      <body>
+        <header>
+          <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+              <h1 class="display-6" style="text-align: center">My Team</h1>
+            </div>
+          </div>
+        </header>
     
-    `;
+        
+      </body>
+    </html> `;
 
     fs.writeFile("index.html", generateHTML, (error) => {
       console.log(error);
