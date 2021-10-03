@@ -59,19 +59,6 @@ inquirer
         }
       },
     },
-    {
-      type: "input",
-      message: "What is the team member id?",
-      name: "id",
-      validate: (idAnswer) => {
-        if (idAnswer) {
-          return true;
-        } else {
-          console.log("Please enter team members id to continue.");
-          return false;
-        }
-      },
-    },
   ])
   /* Questions pass in here to generate HTML*/
   .then((answers) => {
